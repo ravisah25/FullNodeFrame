@@ -1,7 +1,9 @@
 const registermodelObj = require('../model/register');
-
+const bcrypt = require('bcrypt');
 
 module.exports.register = async function (data){ 
+    data.hash = bcrypt.hashSync(data.hashPassword, 10);
+    data.dob = new Date(data.dob)
     return await registermodelObj.create(data)
  }
  

@@ -5,7 +5,7 @@ module.exports.createValidation = async function (req) {
         firstname: Joi.string().required(),
         lastname: Joi.string().required(),
         useremail: Joi.string().required(),
-        hash: Joi.string().required(),
+        hashPassword: Joi.string().required(),
         dob: Joi.string().required(),
         gender: Joi.string().required()
     });
