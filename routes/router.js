@@ -3,6 +3,9 @@ const router = express.Router();
 
 const userregistration = require('../controller/registercontroller')
 
+router.get('/', (req,res) => res.send('Welcome!'))
+
+
 /**
  * @swagger
  * definition:
@@ -46,7 +49,7 @@ const userregistration = require('../controller/registercontroller')
  */
 
 
-router.post('/registration/register/', userregistration.testfunction);
+router.post('/registration/register/', userregistration.register);
 
 /**
  * @swagger

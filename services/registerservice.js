@@ -1,7 +1,7 @@
 const registermodelObj = require('../model/register');
 
 
-module.exports.testfunction = async function (data){ 
+module.exports.register = async function (data){ 
     return await registermodelObj.create(data)
  }
  
@@ -15,14 +15,7 @@ module.exports.testfunction = async function (data){ 
     })    
 }
 
-module.exports.findregisterData = function(req,cb){
+module.exports.findregisterData = async (req) => {
     let condition = { firstname : req.query.firstname};
-    registermodelObj.find(condition, function(err, result){
-        if (err) {
-            return cb({ 'error': err }, null);
-        } else {
-            return cb(null, result);
-        }
-           
-    })
+   return await registermodelObj.find(condition)
 }

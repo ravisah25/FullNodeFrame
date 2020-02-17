@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/testdatabase');
-mongoose.Promise = global.Promise;
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const uniqueValidator = require('mongoose-unique-validator');
+
+
 const Schema = mongoose.Schema;
 
 const registerDetails = new Schema({
@@ -14,8 +13,11 @@ const registerDetails = new Schema({
     },
     useremail : {
         type : String,
+        unique: true,
+        lowercase: true,
+        required: true
     },
-    password : {
+    hash : {
         type : String,
     },
     dob : {
@@ -26,5 +28,6 @@ const registerDetails = new Schema({
     }
 })
 
+registerSchema.plugin(uniqueValidator,{ message: 'to be unique.' })
 const registerSchema = mongoose.model('registerdetails', registerDetails)
 module.exports = registerSchema;
