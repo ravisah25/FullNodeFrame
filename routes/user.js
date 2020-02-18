@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const UserRegistration = require('../controller/registercontroller')
-
+const Utils = require('../utils/auth')
 
 /**
  * @swagger
@@ -45,7 +45,11 @@ const UserRegistration = require('../controller/registercontroller')
  */
 
 
-router.post('/registration/register/', UserRegistration.register);
+router.post('/user/register/', UserRegistration.register);
+
+router.post('/user/login/', UserRegistration.login);
+
+router.use(Utils.verifyToken)
 
 /**
  * @swagger
@@ -68,7 +72,7 @@ router.post('/registration/register/', UserRegistration.register);
  * 
  */
 
-router.get('/registration/getdetails/',UserRegistration.findregisterData);
+router.get('/user/getdetails/', UserRegistration.findregisterData);
 
 /**
  * @swagger
@@ -87,6 +91,6 @@ router.get('/registration/getdetails/',UserRegistration.findregisterData);
  * 
  */
 
-router.get('/registration/getalldetails/',UserRegistration.getAllDetails);
+router.get('/user/getalldetails/',UserRegistration.getAllDetails);
 
 module.exports = router
