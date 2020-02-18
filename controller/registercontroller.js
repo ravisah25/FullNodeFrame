@@ -11,14 +11,14 @@ module.exports.register = async (req, res) => {
     }
 }
 
-module.exports.getAllDetails = function (req, res) {
-    registerserviceObj.getAllDetails(req, function (err, result) {
-        if (err) {
-            res.status(400).json({ 'err': err });
-        } else {
-            res.status(200).json(result);
+module.exports.getAllDetails = async (req, res) => {
+        try{
+            const result = await  registerserviceObj.getAllDetails();
+            return res.status(200).json({ "success": "true", "error":"false", "data": result });
         }
-    })
+       catch (err){
+           return res.status(400).json({ "success": "false", "error":"true", "data": err })
+       }
 }
 
 

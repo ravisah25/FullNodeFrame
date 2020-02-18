@@ -26,7 +26,11 @@ const registerDetails = new Schema({
     gender: {
         type: String,
     }
-})
+},
+{
+    timestamps:true
+}
+)
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -38,10 +42,10 @@ registerDetails.plugin(autoIncrement.plugin, {
 registerDetails.plugin(autoIncrement.plugin, 'registerdetails');
 registerDetails.plugin(uniqueValidator, { message: 'to be unique.' })
 
-registerDetails.method.toJSON = () => {
+registerDetails.methods.toJSON = function () {
     let obj = this.toObject();
     delete obj.hash;
-    return boj;
+    return obj;
 }
 
 const registerSchema = mongoose.model('registerdetails', registerDetails)
