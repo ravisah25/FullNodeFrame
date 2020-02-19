@@ -10,7 +10,7 @@
   "keywords": [
     "test"
   ],
-  "author": "Amit Verma",
+  "author": "Ravi Shankar",
   "license": "ISC",
   "dependencies": {
     "agenda": "^2.0.2",
