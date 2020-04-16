@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
+const config = require(`${__dirname}/../config/config`)
 
-
-mongoose.connect('mongodb://localhost:27017/nodeFrame')
+mongoose.connect(config.db.mongodb_url)
 
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
