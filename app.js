@@ -1,38 +1,52 @@
 const express = require('express')
-const mongoose = require('mongoose')
-const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 3000
 const routes = require('./routes/router')
 const swaggerUi = require('swagger-ui-express')
 const swaggerJSDoc = require('swagger-jsdoc');
+const dbConnection = require(`${__dirname}/./database/connect`)
+const router = require(`${__dirname}/./routes/router`)
+const config = require(`${__dirname}/./config/config`)
 
-app.set('views', path.join(__dirname,'views'));
-app.set('view engine','html');
+// app.set('views', path.join(__dirname,'views'));
+// app.set('view engine','html');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 
-
+let whitelist = config.cors.whitelist
+let corsOptions = {
+  origin: function (origin, callback) {
+    console.log(origin, "origin", whitelist)
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    }
+    else {
+      callback(new Error("not allowed by cors"))
+    }
+  },
+  credentials: true,
+  preflightContinues: false,
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token']
+}
 
 const swaggerDefinition = {
   info: {
-    title: 'Test Development', 
+    title: 'Test Development',
     version: '1.0.0',
-    description: 'A sample API', 
+    description: 'A sample API',
   },
   host: "localhost:3000",
-  basePath: '/', 
+  basePath: config.app.prefix,
 };
 
 const options = {
   swaggerDefinition: swaggerDefinition,
   explorer: true,
-  apis: ['./routes/*.js'], 
+  apis: ['./routes/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -41,13 +55,14 @@ app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
-app.use(cors());
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/', routes)
+if (process.env.NODE_ENV == 'dev')
+  app.use(config.app.prefix, cors(corsOptions), router);
+else
+app.use(config.app.prefix, cors(), router);
 
-app.get('/', (req,res) => res.send('Hello World'))
-
-app.listen(port, ()=> console.log('port is running successfully'))
+app.listen(config.server.port, () => console.log('port is running successfully', config.server.port))
 
 module.exports = app;

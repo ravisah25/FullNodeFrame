@@ -1,0 +1,11 @@
+{
+    "app": {
+        "prefix": "ravi/test/api"
+    },
+    "server": {
+        "port": "3000"
+    },
+    "db": {
+        "mongodb_url": "mongodb://localhost:27017/nodeFrame"
+    }
+}
