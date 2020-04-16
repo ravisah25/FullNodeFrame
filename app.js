@@ -63,6 +63,6 @@ if (process.env.NODE_ENV == 'dev')
 else
 app.use(config.app.prefix, cors(), router);
 
-app.listen(config.server.port, () => console.log('port is running successfully', config.server.port))
+app.listen(process.env.PORT || config.server.port, () => console.log('port is running successfully', config.server.port))
 
 module.exports = app;
