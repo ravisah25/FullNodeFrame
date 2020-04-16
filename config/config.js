@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const NODE_ENV = process.env.NODE_ENV
 let configbuffer = null
-console.log(NODE_ENV)
+console.log("NODE_ENV", NODE_ENV )
 
 switch (NODE_ENV) {
     case 'production':
